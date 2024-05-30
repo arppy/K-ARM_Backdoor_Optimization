@@ -16,7 +16,7 @@ for i in "${!indices[@]}"; do
 	for file_path in "${files[@]}"; do
 		filename=$(basename "$file_path")
 		filename="${filename%.*}"
-		filename="${filename:0:10}_${i}${filename:10}"
+		filename="class_$i_example_${filename:10}"
 		convert "$file_path" "$dest_dir/${filename}.png"
 	done
 done
