@@ -1,7 +1,7 @@
 #!/bin/bash
 
-source_dir="/home/danner/data/imagenet/validation_data"
-dest_dir="destination_folder"
+source_dir="/home/berta/workspace/res/data/ImageNet/train/"
+dest_dir="examples_dirpath"
 X=10 # number of images per class
 
 # imagenette
