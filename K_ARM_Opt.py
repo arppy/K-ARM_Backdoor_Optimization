@@ -21,10 +21,13 @@ from K_Arm_Scanner import *
 
 def K_Arm_Opt(args,target_classes_all,triggered_classes_all,trigger_type,model,direction):
 
-    device = torch.device("cuda:%d" % args.device)
+    mean = [0.485, 0.456, 0.406]
+    std = [0.229, 0.224, 0.225]
     transform = transforms.Compose([
+        transforms.Resize(256),
         transforms.CenterCrop(args.input_width),
-        transforms.ToTensor()
+        transforms.ToTensor(),
+        transforms.Normalize(mean, std)
         ])
 
     data_loader_arr = []
