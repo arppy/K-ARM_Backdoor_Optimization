@@ -61,16 +61,20 @@ def main():
     parser.add_argument('--model_filepath',type=str,default='/data/share/trojai/trojai-round3-dataset/id-00000189/model.pt')
     args = parser.parse_args()
 
-
     print_args(args)
     start_time = time.time()
     model,num_classes = loading_models(args)
     args.num_classes = num_classes
 
-    print('='*41 + ' Arm Pre-Screening ' + '='*40)
+    #print('='*41 + ' Arm Pre-Screening ' + '='*40)
+    #raw_target_classes, raw_victim_classes =  Pre_Screening(args,model)
+    print('=' * 24 + ' Without Arm Pre-Screening ' + '=' * 24)
 
+    raw_target_classes = list(range(args.num_classes))
+    raw_victim_classes = []
+    for i in range(len(raw_target_classes)):
+        raw_victim_classes.append(torch.tensor([x for x in raw_target_classes if x != i]))
 
-    raw_target_classes, raw_victim_classes =  Pre_Screening(args,model)
     target_classes,victim_classes,num_classes,trigger_type = identify_trigger_type(raw_target_classes,raw_victim_classes)
     args.num_classes = num_classes
 
