@@ -18,8 +18,15 @@ def print_args(opt):
 # load model on device, get number of classes
 def loading_models(args):
     device = torch.device("cuda:%d" % args.device)
-    model = models.resnet18(weights=None)
-    model.fc = torch.nn.Linear(512, args.num_classes)
+    if args.input_width == 32 :
+        ResNet = import_from('robustbench.model_zoo.architectures.resnet', 'ResNet')
+        BasicBlock = import_from('robustbench.model_zoo.architectures.resnet', 'BasicBlock')
+        layers = [2, 2, 2, 2]
+        # layers = [1, 1, 1, 1]
+        model = ResNet(BasicBlock, layers, args.num_classes)
+    else :
+        model = models.resnet18(weights=None)
+        model.fc = torch.nn.Linear(512, args.num_classes)
     model.load_state_dict(torch.load(args.model_filepath,map_location=device))
     model.to(device)
     model.eval()
