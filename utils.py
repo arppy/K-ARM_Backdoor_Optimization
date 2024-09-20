@@ -16,6 +16,9 @@ def print_args(opt):
     print(message)
 
 # load model on device, get number of classes
+def import_from(module, name):
+  module = __import__(module, fromlist=[name])
+  return getattr(module, name)
 def loading_models(args):
     device = torch.device("cuda:%d" % args.device)
     if args.input_width == 32 :
